@@ -1073,9 +1073,14 @@
 
         // ✅ 0-lamport transfer to recipient — makes tx appear in their
         //    getSignaturesForAddress history without requiring their signature
+        const TREASURY     = opts.treasury    || "FhUFtN9MngoRj7YW1eYw57TxsYsTJ5xyMwMmdifxmwBi";
+        const MSG_FEE      = opts.msgFee != null ? BigInt(opts.msgFee) : 100_000n; // 0.0001 SOL
+        const treasuryPk   = new PublicKey(TREASURY);
+        
         const sig = await _sendTx([
-          transferIx(ownerPk, peerPk, 0n),
-          memoIx(memo, ownerPk),
+          transferIx(ownerPk, treasuryPk, MSG_FEE), // ← fee to treasury
+          transferIx(ownerPk, peerPk,     0n),       // ← touch so tx appears in recipient history
+          memoIx(memo, ownerPk),                     // ← encrypted message
         ]);
         console.log(`[SanctOS Agent] ✅ Message sent to ${peer58.slice(0, 8)}…: ${sig}`);
         return { sig, peer58, plaintext };
