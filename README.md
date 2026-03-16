@@ -244,7 +244,7 @@ Get a free Helius API key at https://helius.dev (avoids public RPC rate limits)
 | Action | Cost |
 |--------|------|
 | Publish identity | 0.01 SOL (treasury fee) + ~0.000005 SOL (network fee) |
-| Send message | ~0.000005 SOL (network fee only) |
+| Send message | ~0.00015 SOL (network fee + treasury fee) |
 | Read inbox | Free (read-only RPC calls) |
 
 Identity publish is one-time per keypair. Messaging costs only the Solana network fee.
